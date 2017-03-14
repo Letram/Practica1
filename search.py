@@ -86,7 +86,7 @@ class Node:
     def expand(self, problem):
         """Return a list of nodes reachable from this node. [Fig. 3.8]"""
         return [Node(next, self, act,
-                     problem.path_cost(self.path_cost, self.state, act, next))
+                     problem.path_cost(self.path_cost + problem.h(self), self.state, act, next))
                 for (act, next) in problem.successor(self.state)]
 
 
@@ -125,23 +125,8 @@ def graph_search(problem, fringe):
         if problem.goal_test(node.state):
             print "Nodos expandidos: ", extendedNodes
             return node
-        if node.state not in closed:
-            closed[node.state] = True
-            fringe.extend(node.expand(problem))
-            extendedNodes += 1
-    return None
-
-def graph_search_extended(problem, fringe):
-    """Search through the successors of a problem to find a goal.
-    The argument fringe should be an empty queue.
-    If two paths reach a state, only use the best one. [Fig. 3.18]"""
-    extendedNodes=0
-    fringe.append(Node(problem.initial))
-    while fringe:
-        node = fringe.pop()
-        if problem.goal_test(node.state):
-            print "Nodos expandidos: ", extendedNodes
-            return node
+        #if node.state not in closed:
+        #    closed[node.state] = True
         fringe.extend(node.expand(problem))
         extendedNodes += 1
     return None
@@ -155,7 +140,7 @@ def depth_first_graph_search(problem):
     return graph_search(problem, Stack())
 
 def branch_bound_graph_search(problem):
-    return graph_search_extended(problem, openList())
+    return graph_search(problem, openList())
 
 def branch_bound_subcosts_graph_search(problem):
     return graph_search(problem, openList())

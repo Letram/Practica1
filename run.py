@@ -6,12 +6,13 @@ import search
 ab = search.GPSProblem('O', 'S', search.romania)
 
 print "------------------------------anchura---------------------------------"
-print search.breadth_first_graph_search(ab).path()
+#print search.breadth_first_graph_search(ab).path()
 print "----------------------------profundidad-------------------------------"
-print search.depth_first_graph_search(ab).path()
-print "--------------------------Branch&Bound--------------------------------"
-print search.branch_bound_graph_search(ab).path()
-
+#print search.depth_first_graph_search(ab).path()
+print "--------------------------------poda----------------------------------"
+#print search.branch_bound_graph_search(ab).path()
+print "-----------------Branch&Bound subestimada-----------------------------"
+print search.branch_bound_subcosts_graph_search(ab).path()
 #print search.astar_search(ab).path()
 
 # Result:
