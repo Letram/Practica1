@@ -98,11 +98,14 @@ def tree_search(problem, fringe):
     The argument fringe should be an empty queue.
     Don't worry about repeFIFOQueueated paths to a state. [Fig. 3.8]"""
     fringe.append(Node(problem.initial))
+	expandedNodes = 0
     while fringe:
         node = fringe.pop()
         if problem.goal_test(node.state):
+			print "Se han expandido ", expandedNodes, " nodos."
             return node
         fringe.extend(node.expand(problem))
+		expandedNodes = expandedNodes+1
     return None
 
 def breadth_first_tree_search(problem):
@@ -140,10 +143,10 @@ def depth_first_graph_search(problem):
     return graph_search(problem, Stack())
 
 def branch_bound_graph_search(problem):
-    return graph_search(problem, openList())
+    return tree_search(problem, openList())
 
 def branch_bound_subcosts_graph_search(problem):
-    return graph_search(problem, openList())
+    return tree_search(problem, openList())
 
 def depth_limited_search(problem, limit=50):
     """[Fig. 3.12]"""
